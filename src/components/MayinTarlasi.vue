@@ -19,25 +19,47 @@
 
     <!-- OTHERS -->
     <section>
-      <p v-if="!gameOver && language === 'tr'">Mayınlara basmadan kareleri açınız</p>
-      <p v-else-if="!gameOver && language === 'eng'">Open squares without stepping on mines</p>
+      <p v-if="!gameOver && language === 'tr'">
+        Mayınlara basmadan kareleri açınız
+      </p>
+      <p v-else-if="!gameOver && language === 'eng'">
+        Open squares without stepping on mines
+      </p>
       <p v-if="gameOver && language === 'eng'">Restart</p>
       <p v-else-if="gameOver && language === 'tr'">Tekrar Başla</p>
       <div class="buttons" v-if="gameOver">
         <button v-if="language === 'tr'" @click="restart('easy')">Kolay</button>
-        <button v-else-if="language === 'eng'" @click="restart('easy')">Easy</button>
-        <button v-if="language === 'tr'" @click="restart('normal')">Normal</button>
-        <button v-else-if="language === 'eng'" @click="restart('normal')">Normal</button>
+        <button v-else-if="language === 'eng'" @click="restart('easy')">
+          Easy
+        </button>
+        <button v-if="language === 'tr'" @click="restart('normal')">
+          Normal
+        </button>
+        <button v-else-if="language === 'eng'" @click="restart('normal')">
+          Normal
+        </button>
         <button v-if="language === 'tr'" @click="restart('hard')">Zor</button>
-        <button v-else-if="language === 'eng'" @click="restart('hard')">Hard</button>
+        <button v-else-if="language === 'eng'" @click="restart('hard')">
+          Hard
+        </button>
       </div>
     </section>
+    <vue-dropdown
+      :config="config"
+      @setSelectedOption="setNewSelectedOption($event)"
+    ></vue-dropdown>
   </div>
 </template>
 
 <script>
+// import vueDropdown from 'vue-dynamic-dropdown'
+import vueDropdown from './vue-dropdown/vue-dropdown'
+
 export default {
   name: "MayinTarlasi",
+  components: {
+    vueDropdown,
+  },
   data() {
     return {
       show: true,
@@ -59,6 +81,22 @@ export default {
         ["", "", "", "", ""],
         ["", "", "", "", ""],
       ],
+      config: {
+        options: [
+          {
+            value: "ENG",
+          },
+          {
+            value: "TR",
+          },
+        ],
+        placeholder: "Language",
+        backgroundColor: "#cde4f5",
+        textColor: "black",
+        borderRadius: "1.5em",
+        border: "1px solid gray",
+        width: 180,
+      },
     };
   },
   created: function () {
@@ -181,6 +219,10 @@ export default {
       } catch (error) {
         console.error(error + "In catch");
       }
+    },
+
+    setNewSelectedOption(selectedOption) {
+      this.config.placeholder = selectedOption.value;
     },
   },
 };

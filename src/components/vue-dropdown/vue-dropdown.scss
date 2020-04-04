@@ -1,0 +1,109 @@
+// * * * Variables * * *
+$default-text-hover-color: #0a122e;
+$default-hover-color: rgb(58, 142, 232);
+$default-text-color: rgb(58, 142, 232);
+$option-padding: 2px 10px;
+
+.dropdown {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  width: 130px;
+  position: relative;
+  border: 1px solid transparent;
+  border-radius: var(--main-el-border-radius);
+  cursor: pointer;
+  color: var(--dropdown-default-text-color);
+  background: var(--dropdown-background-color);
+  user-select: none;
+  transition: all 0.7s linear;
+  .dropdown-label-container {
+    display: flex;
+    width: 100%;
+    .dropdown-label {
+      display: flex;
+      justify-content: space-between;
+      flex: 1 1 auto;
+      align-items: center;
+      height: var(--option-height);
+      padding: $option-padding;
+      .text {
+        font-family: "Exo", sans-serif;
+      }
+      .angle-down {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: solid $default-text-color;
+        background: transparent;
+        border-width: 0 2px 2px 0;
+        padding: 4px;
+        width: 1px;
+        height: 1px;
+        margin: -3px 5px 0 0;
+        border-color: #0a122e;
+        transform: rotate(45deg);
+        transition: all 0.4s;
+      }
+      .toggled {
+        transform: rotate(-135deg);
+        transition: all 0.5s;
+      }
+    }
+  }
+
+  .options {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    .option {
+      padding-top: 10px;
+      padding-bottom: 10px;
+      padding-left: 50px;
+      padding-right: 50px;
+    }
+    .option:hover {
+      background-color: #0084d4;
+    }
+    .option:last-child {
+      border-radius: 0 0 var(--main-el-border-radius)
+        var(--main-el-border-radius);
+    }
+    .option:last-child:hover {
+      border-radius: 0 0 var(--main-el-border-radius)
+        var(--main-el-border-radius);
+    }
+  }
+}
+.dropdown.expanded {
+  border: 1px solid #0a122e;
+  transition: all 0.7s linear;
+}
+
+// Expand Class - Most important part
+.expand {
+  overflow: hidden;
+  transition-property: height;
+  transition-duration: 0.4s; // Durations can be changed without touching JS
+  transition-timing-function: cubic-bezier(
+    0.175,
+    0.885,
+    0.32,
+    1.275
+  ); // Timing functions also!
+
+  &[aria-expanded="false"] {
+    height: 0 !important;
+    transition-timing-function: cubic-bezier(
+      0.6,
+      -0.28,
+      0.735,
+      0.045
+    ); // Timing function can be different for each direction
+  }
+}
+
+// Smartphones - Landscape + Portrait
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+}
