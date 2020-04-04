@@ -29,7 +29,7 @@
         Open squares without stepping on mines
       </p>
       <p v-if="gameOver && language === 'ENG' && !win">Restart with</p>
-      <p v-if="gameOver && language === 'ENG' && win"><span class="win">Congratulation.</span> Restart with</p>
+      <p v-if="gameOver && language === 'ENG' && win"><span class="win">Congratulations.</span> Restart with</p>
       <p v-else-if="gameOver && language === 'TR' && !win">Tekrar Başla</p>
       <p v-else-if="gameOver && language === 'TR' && win"><span class="win">Tebrikler.</span> Tekrar Başla</p>
       <div class="buttons" v-if="gameOver">
