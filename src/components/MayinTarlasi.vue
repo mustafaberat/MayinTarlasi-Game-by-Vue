@@ -117,6 +117,7 @@ export default {
   methods: {
     restart(difficulty) {
       this.diff = difficulty;
+      this.win = false;
       this.makeBoardsEmpty();
       this.gameOver = false;
       this.getInitialMines();
