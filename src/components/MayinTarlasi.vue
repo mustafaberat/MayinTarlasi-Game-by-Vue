@@ -166,7 +166,6 @@ export default {
         for (let j = 0; j < this.board.length; j++) {
           if(this.board[i][j] === "✓"){
             mustFilled -= 1
-            console.log("MustFilled decrease: " + mustFilled)
             if(mustFilled === 0 ){
               this.showMinedBoard();
               this.gameOver = true;
