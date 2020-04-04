@@ -5,7 +5,7 @@
       <tr v-for="(row, rindex) in board" :key="row.id">
         <td
           @click="checkMine(rindex, cindex)"
-          v-for="(column, cindex) in row"
+          v-for="(column, cindex) in board"
           :key="column.id"
         >
           <transition name="fade">
@@ -19,9 +19,11 @@
     <section>
       <p v-if="!gameOver">Mayınlara basmadan kareleri açınız</p>
       <p v-if="gameOver">Tekrar başla</p>
-      <button v-if="gameOver" @click="restart('easy')">Kolay</button>
-      <button v-if="gameOver" @click="restart('normal')">Normal</button>
-      <button v-if="gameOver" @click="restart('hard')">Zor</button>
+      <div class="buttons" v-if="gameOver">
+        <button @click="restart('easy')">Kolay</button>
+        <button @click="restart('normal')">Normal</button>
+        <button @click="restart('hard')">Zor</button>
+      </div>
     </section>
   </div>
 </template>
@@ -81,9 +83,6 @@ export default {
         ["", "", "", "", ""],
         ["", "", "", "", ""],
       ];
-      console.log("Board and minedBoard empty anymore");
-      console.table(this.board);
-      console.table(this.minedBoard);
     },
 
     makeOnlyBoardEmpty() {
@@ -94,8 +93,6 @@ export default {
         ["", "", "", "", ""],
         ["", "", "", "", ""],
       ];
-      console.log("Board is empty anymore");
-      console.table(this.board);
     },
 
     showMinedBoard() {
@@ -143,8 +140,6 @@ export default {
       } else {
         console.error("GetInitialMines tells wrong gameover value");
       }
-      console.log("First Board Photo:");
-      console.table(this.board);
     },
 
     hideMines() {
@@ -153,19 +148,14 @@ export default {
         if (this.diff === "easy") {
           setTimeout(
             function () {
-              this.show = false;
-              this.show = true;
               this.makeOnlyBoardEmpty();
               this.clickable = true;
-              console.table(this.board);
             }.bind(this),
             6000,
           );
         } else if (this.diff === "normal") {
           setTimeout(
             function () {
-              this.show = false;
-              this.show = true;
               this.makeOnlyBoardEmpty();
               this.clickable = true;
             }.bind(this),
@@ -174,8 +164,6 @@ export default {
         } else if (this.diff === "hard") {
           setTimeout(
             function () {
-              this.show = false;
-              this.show = true;
               this.makeOnlyBoardEmpty();
               this.clickable = true;
             }.bind(this),
