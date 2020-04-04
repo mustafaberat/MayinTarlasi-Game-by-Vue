@@ -69,7 +69,7 @@ export default {
       show: true,
       chosenLanguage: false,
       gameOver: false,
-      diff: "hard",
+      diff: "normal",
       language: "",
       clickable: false,
       minedBoard: [
@@ -151,6 +151,32 @@ export default {
       this.board = this.minedBoard;
     },
 
+    isDone(){
+      let numberOfRandomMine;
+        if (this.diff === "hard") {
+          numberOfRandomMine = this.board.length * 3; //if 25 => 15
+        } else if (this.diff === "normal") {
+          numberOfRandomMine = this.board.length * 2; //if 25 => 10
+        } else if (this.diff === "easy") {
+          numberOfRandomMine = this.board.length; //if 25 => 5
+        }
+        let mustFilled = (Math.pow(this.board.length, 2))- numberOfRandomMine;
+        
+      for (let i = 0; i < this.board.length; i++) {
+        for (let j = 0; j < this.board.length; j++) {
+          if(this.board[i][j] === "✓"){
+            mustFilled -= 1
+            console.log("MustFilled decrease: " + mustFilled)
+            if(mustFilled === 0 ){
+              this.showMinedBoard();
+              this.gameOver = true;
+            this.clickable = false;
+            }
+          } 
+        }        
+      }
+    },
+
     checkMine(x, y) {
       try {
         if (this.clickable && !this.gameOver) {
@@ -161,6 +187,7 @@ export default {
           } else if (this.minedBoard[x][y] === "") {
             this.board[x][y] = "✓";
             this.minedBoard[x][y] = "✓";
+            this.isDone()
             this.$forceUpdate();
           }
         }
