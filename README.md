@@ -1,4 +1,8 @@
-# Mayin Tarlasini Hatirla
+# Minesweeper
+You can play on website: [You can play on website:](https://mayin-tarlasi.now.sh/)
+
+##Screenshot:
+![Screenshot](https://github.com/mustafaberat/MayinTarlasi-Game-by-Vue/blob/master/src/output/screenshot.PNG)
 
 ## Project setup
 
