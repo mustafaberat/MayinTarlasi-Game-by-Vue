@@ -28,8 +28,10 @@
       <p v-else-if="!gameOver && language === 'ENG'">
         Open squares without stepping on mines
       </p>
-      <p v-if="gameOver && language === 'ENG'">Restart with</p>
-      <p v-else-if="gameOver && language === 'TR'">Tekrar Başla</p>
+      <p v-if="gameOver && language === 'ENG' && !win">Restart with</p>
+      <p v-if="gameOver && language === 'ENG' && win"><span class="win">Congratulation.</span> Restart with</p>
+      <p v-else-if="gameOver && language === 'TR' && !win">Tekrar Başla</p>
+      <p v-else-if="gameOver && language === 'TR' && win"><span class="win">Tebrikler.</span> Tekrar Başla</p>
       <div class="buttons" v-if="gameOver">
         <button v-if="language === 'TR'" @click="restart('easy')">Kolay</button>
         <button v-else-if="language === 'ENG'" @click="restart('easy')">
@@ -70,6 +72,7 @@ export default {
       chosenLanguage: false,
       gameOver: false,
       diff: "normal",
+      win: false,
       language: "",
       clickable: false,
       minedBoard: [
@@ -169,7 +172,8 @@ export default {
             if(mustFilled === 0 ){
               this.showMinedBoard();
               this.gameOver = true;
-            this.clickable = false;
+              this.clickable = false;
+              this.win = true;
             }
           } 
         }        

@@ -66,11 +66,14 @@ $squarePx: 60px; //TableWidth/Column or row number
           background-color: #0e1c50;
         }
       }
-    }
+    } //end of buttons
 
     p {
       font-weight: 900;
       color: $black;
+      .win {
+        color: #ff122e;
+      }
     }
   }
 }
