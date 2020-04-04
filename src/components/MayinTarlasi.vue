@@ -19,27 +19,30 @@
 
     <!-- OTHERS -->
     <section>
-      <p v-if="!gameOver && language === 'tr'">
+      <p v-if="language === ''" >
+        Choose a language / Dil seçiniz
+      </p>
+      <p v-if="!gameOver && language === 'TR'">
         Mayınlara basmadan kareleri açınız
       </p>
-      <p v-else-if="!gameOver && language === 'eng'">
+      <p v-else-if="!gameOver && language === 'ENG'">
         Open squares without stepping on mines
       </p>
-      <p v-if="gameOver && language === 'eng'">Restart</p>
-      <p v-else-if="gameOver && language === 'tr'">Tekrar Başla</p>
+      <p v-if="gameOver && language === 'ENG'">Restart with</p>
+      <p v-else-if="gameOver && language === 'TR'">Tekrar Başla</p>
       <div class="buttons" v-if="gameOver">
-        <button v-if="language === 'tr'" @click="restart('easy')">Kolay</button>
-        <button v-else-if="language === 'eng'" @click="restart('easy')">
+        <button v-if="language === 'TR'" @click="restart('easy')">Kolay</button>
+        <button v-else-if="language === 'ENG'" @click="restart('easy')">
           Easy
         </button>
-        <button v-if="language === 'tr'" @click="restart('normal')">
+        <button v-if="language === 'TR'" @click="restart('normal')">
           Normal
         </button>
-        <button v-else-if="language === 'eng'" @click="restart('normal')">
+        <button v-else-if="language === 'ENG'" @click="restart('normal')">
           Normal
         </button>
-        <button v-if="language === 'tr'" @click="restart('hard')">Zor</button>
-        <button v-else-if="language === 'eng'" @click="restart('hard')">
+        <button v-if="language === 'TR'" @click="restart('hard')">Zor</button>
+        <button v-else-if="language === 'ENG'" @click="restart('hard')">
           Hard
         </button>
       </div>
@@ -47,6 +50,7 @@
     <vue-dropdown
       :config="config"
       @setSelectedOption="setNewSelectedOption($event)"
+      v-if="!chosenLanguage"
     ></vue-dropdown>
   </div>
 </template>
@@ -63,9 +67,10 @@ export default {
   data() {
     return {
       show: true,
+      chosenLanguage: false,
       gameOver: false,
       diff: "hard",
-      language: "eng",
+      language: "",
       clickable: false,
       minedBoard: [
         ["", "", "", "", ""],
@@ -100,8 +105,10 @@ export default {
     };
   },
   created: function () {
-    this.getInitialMines();
-    this.hideMines();
+    if(this.chosenLanguage){
+      this.getInitialMines();
+      this.hideMines();
+    } 
   },
 
   methods: {
@@ -223,6 +230,10 @@ export default {
 
     setNewSelectedOption(selectedOption) {
       this.config.placeholder = selectedOption.value;
+      this.language = selectedOption.value;
+      this.clickable = false;
+      this.chosenLanguage = true;
+      this.restart(this.diff);
     },
   },
 };

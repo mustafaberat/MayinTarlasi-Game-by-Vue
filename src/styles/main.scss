@@ -45,7 +45,7 @@ $squarePx: 60px; //TableWidth/Column or row number
     }
   }
   section {
-    width: $tableWidth;
+    width: $tableWidth + 8;
 
     .buttons {
       display: flex;
