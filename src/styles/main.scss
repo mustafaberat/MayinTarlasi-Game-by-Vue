@@ -10,7 +10,7 @@ $squarePx: 60px; //TableWidth/Column or row number
   margin-right: auto;
   max-width: $maxWidth;
   margin-top: 20px;
-  border: 2px solid green;
+  border: 1px solid green;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -41,7 +41,9 @@ $squarePx: 60px; //TableWidth/Column or row number
     }
   }
   section {
-    transition: 0.2s;
+    // transition: 0.2s;
+    width: $tableWidth;
+    border: 2px solid darkblue;
     margin-top: 10px;
 
     button {

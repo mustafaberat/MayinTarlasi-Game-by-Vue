@@ -17,8 +17,11 @@
 
     <!-- OTHERS -->
     <section>
-      <p v-if="!gameOver">Mayınlara basmadan her kareyi açınız</p>
-      <button v-if="gameOver" @click="restart()">Restart</button>
+      <p v-if="!gameOver">Mayınlara basmadan kareleri açınız</p>
+      <p v-if="gameOver">Tekrar başla</p>
+      <button v-if="gameOver" @click="restart('easy')">Kolay</button>
+      <button v-if="gameOver" @click="restart('normal')">Normal</button>
+      <button v-if="gameOver" @click="restart('hard')">Zor</button>
     </section>
   </div>
 </template>
@@ -49,13 +52,14 @@ export default {
       ],
     };
   },
-  created: function() {
+  created: function () {
     this.getInitialMines();
     this.hideMines();
   },
 
   methods: {
-    restart() {
+    restart(difficulty) {
+      this.diff = difficulty;
       this.makeBoardsEmpty();
       this.gameOver = false;
       this.getInitialMines();
@@ -148,7 +152,7 @@ export default {
         this.show = true;
         if (this.diff === "easy") {
           setTimeout(
-            function() {
+            function () {
               this.show = false;
               this.show = true;
               this.makeOnlyBoardEmpty();
@@ -159,7 +163,7 @@ export default {
           );
         } else if (this.diff === "normal") {
           setTimeout(
-            function() {
+            function () {
               this.show = false;
               this.show = true;
               this.makeOnlyBoardEmpty();
@@ -169,7 +173,7 @@ export default {
           );
         } else if (this.diff === "hard") {
           setTimeout(
-            function() {
+            function () {
               this.show = false;
               this.show = true;
               this.makeOnlyBoardEmpty();
@@ -191,7 +195,7 @@ export default {
 <style scoped>
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.5s;
+  transition: opacity 0.4s;
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
