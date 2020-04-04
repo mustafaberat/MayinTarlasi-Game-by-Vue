@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Exo:wght@900&display=swap");
+
 $maxWidth: 1200px;
 $tableHeight: 300px;
 $tableWidth: 300px;
@@ -9,12 +11,13 @@ $squarePx: 60px; //TableWidth/Column or row number
   margin-left: auto;
   margin-right: auto;
   max-width: $maxWidth;
-  margin-top: 20px;
+  margin-top: 40px;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   justify-content: center;
+  font-family: "Exo", sans-serif;
 
   table {
     height: $tableHeight;
@@ -37,6 +40,8 @@ $squarePx: 60px; //TableWidth/Column or row number
     & td {
       border: $border;
       cursor: pointer;
+      font-size: x-large;
+      font-weight: bold;
     }
   }
   section {

@@ -2,14 +2,16 @@
   <div class="container">
     <!-- TABLE -->
     <table cellspacing="0">
-      <tr v-for="(row, rindex) in board" :key="row.id">
+      <tr v-for="(row, rindex) in board" :key="rindex.id">
         <td
           @click="checkMine(rindex, cindex)"
           v-for="(column, cindex) in board"
           :key="column.id"
         >
           <transition name="fade">
-            <span v-if="show" :key="step">{{ board[rindex][cindex] }}</span>
+            <span v-if="show" :key="board[rindex][cindex].time">{{
+              board[rindex][cindex]
+            }}</span>
           </transition>
         </td>
       </tr>
@@ -17,12 +19,17 @@
 
     <!-- OTHERS -->
     <section>
-      <p v-if="!gameOver">Mayınlara basmadan kareleri açınız</p>
-      <p v-if="gameOver">Tekrar başla</p>
+      <p v-if="!gameOver && language === 'tr'">Mayınlara basmadan kareleri açınız</p>
+      <p v-else-if="!gameOver && language === 'eng'">Open squares without stepping on mines</p>
+      <p v-if="gameOver && language === 'eng'">Restart</p>
+      <p v-else-if="gameOver && language === 'tr'">Tekrar Başla</p>
       <div class="buttons" v-if="gameOver">
-        <button @click="restart('easy')">Kolay</button>
-        <button @click="restart('normal')">Normal</button>
-        <button @click="restart('hard')">Zor</button>
+        <button v-if="language === 'tr'" @click="restart('easy')">Kolay</button>
+        <button v-else-if="language === 'eng'" @click="restart('easy')">Easy</button>
+        <button v-if="language === 'tr'" @click="restart('normal')">Normal</button>
+        <button v-else-if="language === 'eng'" @click="restart('normal')">Normal</button>
+        <button v-if="language === 'tr'" @click="restart('hard')">Zor</button>
+        <button v-else-if="language === 'eng'" @click="restart('hard')">Hard</button>
       </div>
     </section>
   </div>
@@ -36,7 +43,7 @@ export default {
       show: true,
       gameOver: false,
       diff: "hard",
-      step: 0,
+      language: "eng",
       clickable: false,
       minedBoard: [
         ["", "", "", "", ""],
@@ -102,15 +109,14 @@ export default {
     checkMine(x, y) {
       try {
         if (this.clickable && !this.gameOver) {
-          if (this.minedBoard[x][y] === "X") {
+          if (this.minedBoard[x][y] === "x") {
             this.showMinedBoard();
             this.gameOver = true;
             this.clickable = false;
-            this.step += 1;
           } else if (this.minedBoard[x][y] === "") {
-            this.board[x][y] = "C";
-            this.minedBoard[x][y] = "C";
-            this.step += 1;
+            this.board[x][y] = "✓";
+            this.minedBoard[x][y] = "✓";
+            this.$forceUpdate();
           }
         }
       } catch (error) {
@@ -122,18 +128,18 @@ export default {
       if (!this.gameOver) {
         let numberOfRandomMine;
         if (this.diff === "hard") {
-          numberOfRandomMine = this.board.length * 3;
+          numberOfRandomMine = this.board.length * 3; //if 25 => 15
         } else if (this.diff === "normal") {
-          numberOfRandomMine = this.board.length * 2;
+          numberOfRandomMine = this.board.length * 2; //if 25 => 10
         } else if (this.diff === "easy") {
-          numberOfRandomMine = this.board.length;
+          numberOfRandomMine = this.board.length; //if 25 => 5
         }
         while (numberOfRandomMine > 0) {
           let randNoX = Math.round(Math.random() * (this.board.length - 1));
           let randNoY = Math.round(Math.random() * (this.board.length - 1));
           if (this.board[randNoX][randNoY] === "") {
-            this.board[randNoX][randNoY] = "X";
-            this.minedBoard[randNoX][randNoY] = "X";
+            this.board[randNoX][randNoY] = "x";
+            this.minedBoard[randNoX][randNoY] = "x";
             numberOfRandomMine -= 1;
           }
         }
